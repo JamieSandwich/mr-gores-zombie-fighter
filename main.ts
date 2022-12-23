@@ -13,30 +13,41 @@ namespace SpriteKind {
     export const Kanye = SpriteKind.create()
     export const Beam = SpriteKind.create()
     export const HeadYe = SpriteKind.create()
+    export const death = SpriteKind.create()
+    export const ducky = SpriteKind.create()
+    export const snake = SpriteKind.create()
+    export const collectable = SpriteKind.create()
+    export const Bazooka = SpriteKind.create()
+    export const LaserGunThing = SpriteKind.create()
+    export const Shotgun = SpriteKind.create()
+    export const Blast = SpriteKind.create()
 }
-info.player3.onScore(-6, function () {
-    Gun1.setPosition(200, 0)
-    reloadspeech.sayText("Reloading...", 5000, false)
-    pause(randint(100, 6000))
-    Gun1.setPosition(20, 100)
-    info.player3.setScore(0)
-})
-scene.onOverlapTile(SpriteKind.Cheatcode, sprites.castle.tileGrass2, function (sprite, location) {
-    tiles.setWallAt(tiles.getTileLocation(0, 0), true)
-})
-sprites.onOverlap(SpriteKind.HeadYe, SpriteKind.Beam, function (sprite, otherSprite) {
-    HeadYeSprite.sayText("OWIESS!!! I WANT MY MOMMY!!!", 2000, false)
-    info.changeScoreBy(6969)
-})
-controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+sprites.onOverlap(SpriteKind.LargeThreat1, SpriteKind.Blast, function (sprite, otherSprite) {
+    LargeZombo1.destroy()
+    bullet.destroy()
+    info.changeScoreBy(5)
     music.smallCrash.play()
-    scene.cameraShake(10, 500)
-    KABOOOOOOOMMMM = sprites.createProjectileFromSprite(assets.image`BazookaBullet`, BAZOOKA, 0, -50)
-    BAZOOKA.setImage(assets.image`BazookaFire`)
-    for (let index = 0; index < 60; index++) {
-        pause(1000)
-    }
-    BAZOOKA.setImage(assets.image`Bazooka`)
+    scene.cameraShake(4, 500)
+    pause(2000)
+    SmallZomb1 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy)
+    tiles.placeOnRandomTile(SmallZomb1, assets.tile`zomb spawn`)
+    pause(randint(100, 3000))
+    SmallZomb12 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy12)
+    tiles.placeOnRandomTile(SmallZomb12, assets.tile`zomb spawn`)
+})
+controller.combos.attachCombo("d+a", function () {
+    info.player2.changeScoreBy(350)
+    game.showLongText("Welcome to the Game Manual!", DialogLayout.Full)
+    game.showLongText("To reset zombie spawn press UP 3 times", DialogLayout.Full)
+    game.showLongText("To spawn The (Not-So) Secret Bazooka input B>A>B>B>A+B", DialogLayout.Full)
+    game.showLongText("To fire the Bazooka input UP>UP>B+A", DialogLayout.Full)
+    game.showLongText("Enter input B>B>UP>DOWN to spawn The Laser Gun", DialogLayout.Full)
+    game.showLongText("To shoot the Laser press B and RIGHT at the same time", DialogLayout.Full)
+    game.showLongText("Input B>Z>RIGHT>DOWN>LEFT to spawn the shotgun", DialogLayout.Full)
+    game.showLongText("Press A and LEFT at the same time to shoot the shotgun", DialogLayout.Full)
+    game.showLongText("All bonus weapons disappear after 1 shot, but respawn later", DialogLayout.Full)
+    game.showLongText("Every time you spawn a new weapon there is a chance they will all disappear forever", DialogLayout.Full)
+    game.showLongText("Input the Konami code to [37707404. Closing program.]", DialogLayout.Full)
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Enemy12, function (sprite, otherSprite) {
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
@@ -73,11 +84,20 @@ sprites.onOverlap(SpriteKind.LargeThreat1, SpriteKind.Trigger2, function (sprite
     info.player2.setLife(3)
     game.over(false, effects.slash)
 })
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Blast, function (sprite, otherSprite) {
+    SmallZomb1.destroy()
+    bullet.destroy()
+    info.changeScoreBy(1)
+    music.thump.play()
+    scene.cameraShake(4, 500)
+    pause(2000)
+    SmallZomb1 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy)
+    tiles.placeOnRandomTile(SmallZomb1, assets.tile`zomb spawn`)
+})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     Gun2.setImage(assets.image`Gun Right Fire`)
     bullet = sprites.createProjectileFromSprite(assets.image`Bullet Left`, Gun2, -300, -10000)
     music.knock.play()
-    Cheater.setVelocity(10, 0)
 })
 sprites.onOverlap(SpriteKind.LargeThreat2, SpriteKind.Trigger2, function (sprite, otherSprite) {
     sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
@@ -87,10 +107,23 @@ sprites.onOverlap(SpriteKind.LargeThreat2, SpriteKind.Trigger2, function (sprite
     sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat1)
     sprites.destroyAllSpritesOfKind(SpriteKind.Trigger2)
     sprites.destroyAllSpritesOfKind(SpriteKind.trigger)
-    LargeZombo2.setImage(assets.image`Zombie Large Bite`)
+    LargeZombo2.setImage(assets.image`ZombieAmirLargeAttack`)
     pause(500)
     info.player2.setLife(3)
     game.over(false, effects.slash)
+})
+controller.combos.attachCombo("urrdrldl", function () {
+    game.splash("Code under construction. no fuction has been made yet.", "congrats on your puzzle solving skills though!")
+})
+controller.combos.attachCombo("bbud", function () {
+    console.log("Spawning Player 2...")
+    console.log("Player 2 Spawned.")
+    LaserGun = sprites.create(assets.image`LaserD`, SpriteKind.LaserGunThing)
+    LaserGun.setPosition(145, 49)
+    info.player2.changeScoreBy(500)
+    if (randint(0, 20) == 0) {
+        tiles.setWallAt(tiles.getTileLocation(9, 6), true)
+    }
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Beam, function (sprite, otherSprite) {
     SmallZomb1.destroy()
@@ -100,11 +133,55 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Beam, function (sprite, otherSpri
     SmallZomb1 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy)
     tiles.placeOnRandomTile(SmallZomb1, assets.tile`zomb spawn`)
 })
+controller.combos.attachCombo("uuu", function () {
+    music.setVolume(500)
+    info.changeScoreBy(-10)
+    for (let index = 0; index < 10; index++) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
+        sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy1)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy12)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy22)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy2)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+        sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat1)
+        sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat2)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Trigger2)
+        sprites.destroyAllSpritesOfKind(SpriteKind.trigger)
+        music.bigCrash.play()
+        scene.cameraShake(100, 500)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Beam)
+    }
+    sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
+    sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy1)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy12)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy22)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy2)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat1)
+    sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat2)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Trigger2)
+    sprites.destroyAllSpritesOfKind(SpriteKind.trigger)
+    timer.after(2000, function () {
+        SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
+        tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
+        timer.after(2000, function () {
+            SmallZomb12 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy12)
+            tiles.placeOnRandomTile(SmallZomb12, assets.tile`zomb spawn`)
+            timer.after(2000, function () {
+                SmallZomb2 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy2)
+                tiles.placeOnRandomTile(SmallZomb2, assets.tile`zomb spawn2`)
+                timer.after(2000, function () {
+                    SmallZomb1 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy)
+                    tiles.placeOnRandomTile(SmallZomb1, assets.tile`zomb spawn`)
+                })
+            })
+        })
+    })
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     Gun1.setImage(assets.image`Gun Left Fire`)
     bullet = sprites.createProjectileFromSprite(assets.image`Bullet Right`, Gun1, 300, -10000)
     music.knock.play()
-    Cheater.setVelocity(-25, 0)
 })
 controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
 	
@@ -120,66 +197,65 @@ sprites.onOverlap(SpriteKind.MidEnemy1, SpriteKind.Beam, function (sprite, other
     SmallZomb12 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy12)
     tiles.placeOnRandomTile(SmallZomb12, assets.tile`zomb spawn`)
 })
+controller.combos.attachCombo("uuddlrlrba", function () {
+    game.showLongText("Inp(3)t(0):", DialogLayout.Full)
+    console.log("Error Detected")
+    game.showLongText("[Fixing e(7)ror...]", DialogLayout.Full)
+    game.showLongText("[Fix complete.]", DialogLayout.Full)
+    game.showLongText("Inputs:", DialogLayout.Full)
+    game.showLongText("ASSBASS|*", DialogLayout.Full)
+    game.showLongText("B   AR|#", DialogLayout.Full)
+    game.showLongText("S>W>X>X|^", DialogLayout.Full)
+    game.showLongText("C>S>S>X|^|-1", DialogLayout.Full)
+    game.showLongText("37707404", DialogLayout.Full)
+})
 sprites.onOverlap(SpriteKind.Enemy2, SpriteKind.Enemy22, function (sprite, otherSprite) {
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy2)
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy22)
-    MidZomb2 = sprites.create(assets.image`Mid Zombie`, SpriteKind.MidEnemy2)
+    MidZomb2 = sprites.create(assets.image`ZombieAmirMedium`, SpriteKind.MidEnemy2)
     tiles.placeOnRandomTile(MidZomb2, assets.tile`zomb spawn2`)
     pause(2000)
     pause(1000)
     zombietrigger = sprites.create(assets.image`ZombieTrigger`, SpriteKind.trigger)
     tiles.placeOnRandomTile(zombietrigger, assets.tile`zomb spawn2`)
 })
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    sprites.destroyAllSpritesOfKind(SpriteKind.Beam)
-    music.setVolume(500)
-    for (let index = 0; index < 10; index++) {
-        sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
-        sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy1)
-        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy12)
-        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy22)
-        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy2)
-        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-        sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat1)
-        sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat2)
-        sprites.destroyAllSpritesOfKind(SpriteKind.Trigger2)
-        sprites.destroyAllSpritesOfKind(SpriteKind.trigger)
-        music.bigCrash.play()
-        music.knock.play()
-        music.knock.play()
-        scene.cameraShake(100, 500)
-    }
-    sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
-    sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy1)
-    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy12)
-    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy22)
-    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy2)
-    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-    sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat1)
-    sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat2)
-    sprites.destroyAllSpritesOfKind(SpriteKind.Trigger2)
-    sprites.destroyAllSpritesOfKind(SpriteKind.trigger)
-    pause(randint(100, 3000))
-    SmallZomb22 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy22)
-    tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
+sprites.onOverlap(SpriteKind.MidEnemy1, SpriteKind.Blast, function (sprite, otherSprite) {
+    MidZomb1.destroy()
+    bullet.destroy()
+    info.changeScoreBy(2)
+    music.smallCrash.play()
+    scene.cameraShake(4, 500)
+    pause(2000)
+    SmallZomb1 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy)
+    tiles.placeOnRandomTile(SmallZomb1, assets.tile`zomb spawn`)
     pause(randint(100, 3000))
     SmallZomb12 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy12)
     tiles.placeOnRandomTile(SmallZomb12, assets.tile`zomb spawn`)
-    pause(randint(100, 3000))
-    SmallZomb2 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy2)
-    tiles.placeOnRandomTile(SmallZomb2, assets.tile`zomb spawn2`)
-    pause(randint(100, 3000))
-    SmallZomb1 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy)
-    tiles.placeOnRandomTile(SmallZomb1, assets.tile`zomb spawn`)
-    console.log("Spawning Player 2...")
-    pause(randint(100, 1000))
-    console.log("Player 2 Spawned.")
-    LaserGun = sprites.create(assets.image`LaserD`, SpriteKind.Player)
-    LaserGun.setPosition(145, 49)
-    pause(randint(69, 42000))
+})
+controller.combos.attachCombo("a+b", function () {
+    sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+    info.player3.setScore(11)
+    info.player4.setScore(11)
+    music.footstep.play()
 })
 sprites.onOverlap(SpriteKind.Beam, SpriteKind.Trigger2, function (sprite, otherSprite) {
     deathtrigger.destroy(effects.ashes, 100)
+})
+controller.combos.attachCombo("babba+b", function () {
+    sprites.destroyAllSpritesOfKind(SpriteKind.Bazooka)
+    BAZOOKA = sprites.create(assets.image`Bazooka`, SpriteKind.Bazooka)
+    BAZOOKA.setPosition(80, 113)
+    if (randint(0, 20) == 0) {
+        tiles.setWallAt(tiles.getTileLocation(9, 6), true)
+    }
+})
+info.player3.onScore(0, function () {
+    Gun1.setPosition(200, 0)
+    reloadspeech.sayText("Reloading...", 5000, false)
+    timer.after(randint(1000, 6000), function () {
+        Gun1.setPosition(20, 100)
+        info.player3.setScore(10)
+    })
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, otherSprite) {
     SmallZomb1.destroy()
@@ -190,9 +266,23 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, oth
     SmallZomb1 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy)
     tiles.placeOnRandomTile(SmallZomb1, assets.tile`zomb spawn`)
 })
-controller.right.onEvent(ControllerButtonEvent.Released, function () {
-    sprites.destroyAllSpritesOfKind(SpriteKind.Beam)
-    LaserGun.setImage(assets.image`LaserDNoPower`)
+controller.combos.attachCombo("lddbldd", function () {
+    scene.setBackgroundImage(assets.image`Spotify`)
+    tiles.setCurrentTilemap(tilemap`Break`)
+    game.splash("Want a break from the ads?", "Tap now to watch a video and get 30 minutes of ad free music.")
+})
+sprites.onOverlap(SpriteKind.LargeThreat2, SpriteKind.Blast, function (sprite, otherSprite) {
+    LargeZombo2.destroy()
+    bullet.destroy()
+    info.changeScoreBy(5)
+    music.smallCrash.play()
+    scene.cameraShake(4, 500)
+    pause(2000)
+    SmallZomb2 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy2)
+    tiles.placeOnRandomTile(SmallZomb2, assets.tile`zomb spawn2`)
+    pause(randint(100, 3000))
+    SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
+    tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
 })
 sprites.onOverlap(SpriteKind.Kanye, SpriteKind.Enemy12, function (sprite, otherSprite) {
     sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
@@ -219,9 +309,35 @@ sprites.onOverlap(SpriteKind.Kanye, SpriteKind.Projectile, function (sprite, oth
     Kanyeboss.sayText("And I'm Zomb-Ye West!", 2000, false)
     bullet.destroy()
 })
-sprites.onOverlap(SpriteKind.HeadYe, SpriteKind.Projectile, function (sprite, otherSprite) {
-    HeadYeSprite.sayText("AAGGHH FUCK!!!", 2000, false)
-    info.changeScoreBy(6969)
+sprites.onOverlap(SpriteKind.Enemy22, SpriteKind.Blast, function (sprite, otherSprite) {
+    SmallZomb22.destroy()
+    bullet.destroy()
+    info.changeScoreBy(1)
+    music.smallCrash.play()
+    scene.cameraShake(4, 500)
+    pause(randint(100, 3000))
+    SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
+    tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
+})
+info.onCountdownEnd(function () {
+    tiles.setCurrentTilemap(tilemap`Boss`)
+    console.log("Enter Command Into Chat")
+    console.log(">Spawn 'Zombie Nazi Kanye West'")
+    info.player2.changeScoreBy(750)
+    game.setDialogTextColor(2)
+    game.showLongText("[Spawning Kanye.]", DialogLayout.Top)
+    console.log("Spawning Kanye")
+    Kanyeboss = sprites.create(assets.image`KanyeSmall`, SpriteKind.Kanye)
+    Kanyeboss.setPosition(75, 2)
+    timer.after(5000, function () {
+        Kanyeboss.setImage(assets.image`KanyeMedium`)
+        Kanyeboss.setPosition(73, 7)
+        timer.after(10000, function () {
+            Kanyeboss.setImage(assets.image`Kanye`)
+            Kanyeboss.setPosition(87, -3)
+            Kanyeboss.setVelocity(0, 1)
+        })
+    })
 })
 info.player2.onScore(0, function () {
     Kanyeboss.setFlag(SpriteFlag.GhostThroughSprites, true)
@@ -229,29 +345,54 @@ info.player2.onScore(0, function () {
     Kanyeboss.setVelocity(0, 0)
     Kanyeboss.setImage(assets.image`KanyeDeath`)
     Kanyeboss.sayText("DAMN, NOW HOW AM I SUPPOSED TO RELEASE A NEW ALBUM!?", 2000, false)
-    Kanyeboss.sayText("NOOOOOOOO!!!!!", 2000, false)
-    Kanyeboss.destroy(effects.disintegrate, 10000)
-    tiles.setCurrentTilemap(tilemap`KanyeDeathThing`)
-    pause(5000)
-    pause(5000)
-    mySprite = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Player)
+    timer.after(2000, function () {
+        Kanyeboss.sayText("NOOOOOOOO!!!!!", 2000, false)
+        Kanyeboss.destroy(effects.disintegrate, 10000)
+        timer.after(1000, function () {
+            game.over(true, effects.bubbles)
+        })
+    })
+})
+sprites.onOverlap(SpriteKind.Enemy2, SpriteKind.Blast, function (sprite, otherSprite) {
+    SmallZomb2.destroy()
+    bullet.destroy()
+    info.changeScoreBy(1)
+    music.smallCrash.play()
+    scene.cameraShake(4, 500)
+    pause(2000)
+    SmallZomb2 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy2)
+    tiles.placeOnRandomTile(SmallZomb2, assets.tile`zomb spawn2`)
+})
+controller.combos.attachCombo("blla", function () {
+    game.splash("You have been diagnosed with cancer.", "You have 1 minute to live.")
+    info.setScore(696969)
+    info.player2.changeScoreBy(69)
+    timer.after(60000, function () {
+        for (let index = 0; index < 4; index++) {
+            sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
+            sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy1)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy12)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy22)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy2)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+            sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat1)
+            sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat2)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Trigger2)
+            sprites.destroyAllSpritesOfKind(SpriteKind.trigger)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Beam)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Kanye)
+            sprites.destroyAllSpritesOfKind(SpriteKind.ducky)
+            sprites.destroyAllSpritesOfKind(SpriteKind.snake)
+            sprites.destroyAllSpritesOfKind(SpriteKind.collectable)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Player)
+        }
+        scene.setBackgroundImage(assets.image`myImage0`)
+        info.setScore(0)
+        music.playSoundEffect(music.createSoundEffect(WaveShape.Sine, 508, 508, 126, 126, 9999, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.UntilDone)
+        info.changeLifeBy(-6969696969)
+        game.over(false)
+    })
 })
 sprites.onOverlap(SpriteKind.LargeThreat2, SpriteKind.Projectile, function (sprite, otherSprite) {
     LargeZombo2.destroy()
@@ -259,10 +400,10 @@ sprites.onOverlap(SpriteKind.LargeThreat2, SpriteKind.Projectile, function (spri
     info.changeScoreBy(5)
     music.thump.play()
     pause(2000)
-    SmallZomb2 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy2)
+    SmallZomb2 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy2)
     tiles.placeOnRandomTile(SmallZomb2, assets.tile`zomb spawn2`)
     pause(randint(100, 3000))
-    SmallZomb22 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy22)
+    SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
     tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
 })
 sprites.onOverlap(SpriteKind.Beam, SpriteKind.trigger, function (sprite, otherSprite) {
@@ -273,7 +414,7 @@ sprites.onOverlap(SpriteKind.Enemy22, SpriteKind.Beam, function (sprite, otherSp
     info.changeScoreBy(3)
     music.thump.play()
     pause(randint(100, 3000))
-    SmallZomb22 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy22)
+    SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
     tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
 })
 sprites.onOverlap(SpriteKind.Kanye, SpriteKind.Enemy2, function (sprite, otherSprite) {
@@ -314,9 +455,56 @@ sprites.onOverlap(SpriteKind.Beam, SpriteKind.Kanye, function (sprite, otherSpri
     if (true) {
         for (let index = 0; index < 10; index++) {
             info.changeScoreBy(3)
-            info.player2.changeScoreBy(-3)
+            info.player2.changeScoreBy(-1)
         }
     }
+})
+controller.combos.attachCombo("b+r", function () {
+    controller.combos.setTimeout(700000)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Beam)
+    Beam = sprites.create(assets.image`laser`, SpriteKind.Beam)
+    beam2 = sprites.create(assets.image`extralaser`, SpriteKind.Beam)
+    Beam3 = sprites.create(assets.image`extralaser`, SpriteKind.Beam)
+    beam2.setPosition(60, 40)
+    Beam.setPosition(60, 50)
+    Beam3.setPosition(60, 60)
+    LaserGun.setImage(assets.image`LaserDFire`)
+    timer.after(randint(1000, 3000), function () {
+        sprites.destroyAllSpritesOfKind(SpriteKind.Beam)
+        LaserGun.setImage(assets.image`LaserDNoPower`)
+        timer.after(1000, function () {
+            for (let index = 0; index < randint(200, 500); index++) {
+                tiles.placeOnTile(LaserGun, tiles.getTileLocation(0, 15))
+                sprites.destroyAllSpritesOfKind(SpriteKind.Beam)
+                pause(100)
+            }
+            LaserGun.setPosition(145, 49)
+            LaserGun.setImage(assets.image`LaserD`)
+        })
+    })
+})
+controller.combos.attachCombo("uua+b", function () {
+    music.smallCrash.play()
+    scene.cameraShake(10, 500)
+    KABOOOOOOOMMMM = sprites.createProjectileFromSprite(assets.image`BazookaBullet`, BAZOOKA, 0, -50)
+    BAZOOKA.setImage(assets.image`BazookaFire`)
+    timer.after(1000, function () {
+        tiles.placeOnTile(BAZOOKA, tiles.getTileLocation(20, 0))
+        timer.after(20000, function () {
+            BAZOOKA.setImage(assets.image`Bazooka`)
+            BAZOOKA.setPosition(80, 113)
+        })
+    })
+})
+controller.combos.attachCombo("dubb", function () {
+    duck = sprites.create(assets.image`ducc`, SpriteKind.ducky)
+    duck.setPosition(17, 49)
+    animation.runImageAnimation(
+    duck,
+    assets.animation`duccdanc`,
+    100,
+    true
+    )
 })
 sprites.onOverlap(SpriteKind.LargeThreat1, SpriteKind.Beam, function (sprite, otherSprite) {
     LargeZombo1.destroy()
@@ -328,15 +516,6 @@ sprites.onOverlap(SpriteKind.LargeThreat1, SpriteKind.Beam, function (sprite, ot
     pause(randint(100, 3000))
     SmallZomb12 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy12)
     tiles.placeOnRandomTile(SmallZomb12, assets.tile`zomb spawn`)
-})
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    Beam = sprites.create(assets.image`laser`, SpriteKind.Beam)
-    Beam.setPosition(60, 50)
-    LaserGun.setImage(assets.image`LaserDFire`)
-    pause(randint(333, 2000))
-    sprites.destroyAllSpritesOfKind(SpriteKind.Beam)
-    pause(randint(2000, 15000))
-    LaserGun.setImage(assets.image`LaserD`)
 })
 sprites.onOverlap(SpriteKind.LargeThreat1, SpriteKind.Projectile, function (sprite, otherSprite) {
     LargeZombo1.destroy()
@@ -368,10 +547,10 @@ sprites.onOverlap(SpriteKind.LargeThreat2, SpriteKind.Beam, function (sprite, ot
     info.changeScoreBy(3)
     music.thump.play()
     pause(2000)
-    SmallZomb2 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy2)
+    SmallZomb2 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy2)
     tiles.placeOnRandomTile(SmallZomb2, assets.tile`zomb spawn2`)
     pause(randint(100, 3000))
-    SmallZomb22 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy22)
+    SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
     tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
 })
 sprites.onOverlap(SpriteKind.Enemy2, SpriteKind.Projectile, function (sprite, otherSprite) {
@@ -380,7 +559,7 @@ sprites.onOverlap(SpriteKind.Enemy2, SpriteKind.Projectile, function (sprite, ot
     info.changeScoreBy(1)
     music.thump.play()
     pause(2000)
-    SmallZomb2 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy2)
+    SmallZomb2 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy2)
     tiles.placeOnRandomTile(SmallZomb2, assets.tile`zomb spawn2`)
 })
 sprites.onOverlap(SpriteKind.Enemy12, SpriteKind.Projectile, function (sprite, otherSprite) {
@@ -391,9 +570,6 @@ sprites.onOverlap(SpriteKind.Enemy12, SpriteKind.Projectile, function (sprite, o
     pause(randint(100, 3000))
     SmallZomb12 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy12)
     tiles.placeOnRandomTile(SmallZomb12, assets.tile`zomb spawn`)
-})
-controller.up.onEvent(ControllerButtonEvent.Released, function () {
-    BAZOOKA.setImage(assets.image`BazookaSmoke`)
 })
 sprites.onOverlap(SpriteKind.Kanye, SpriteKind.Enemy22, function (sprite, otherSprite) {
     sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
@@ -427,23 +603,11 @@ sprites.onOverlap(SpriteKind.MidEnemy1, SpriteKind.Projectile, function (sprite,
     SmallZomb12 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy12)
     tiles.placeOnRandomTile(SmallZomb12, assets.tile`zomb spawn`)
 })
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    game.splash("WHAT THE FUCK DID YOU DO!?", "Press up to shoot your new bazooka. Be wise though, it has a very long cooldown")
-    BAZOOKA = sprites.create(assets.image`Bazooka`, SpriteKind.Player)
-    BAZOOKA.setPosition(80, 113)
-    for (let index = 0; index < 69; index++) {
-        pause(6900)
-        pause(690)
-        pause(690)
-        pause(690)
-    }
-    game.splash("farts on you cutely", "press left to fart loudly :)")
-})
 sprites.onOverlap(SpriteKind.MidEnemy2, SpriteKind.trigger, function (sprite, otherSprite) {
     sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
     sprites.destroyAllSpritesOfKind(SpriteKind.trigger)
     sprites.destroyAllSpritesOfKind(SpriteKind.Trigger2)
-    LargeZombo2 = sprites.create(assets.image`Zombie Large`, SpriteKind.LargeThreat2)
+    LargeZombo2 = sprites.create(assets.image`ZombieAmirLarge`, SpriteKind.LargeThreat2)
     tiles.placeOnRandomTile(LargeZombo2, assets.tile`zomb spawn2`)
     pause(1000)
     pause(500)
@@ -456,33 +620,25 @@ sprites.onOverlap(SpriteKind.Enemy22, SpriteKind.Projectile, function (sprite, o
     info.changeScoreBy(1)
     music.thump.play()
     pause(randint(100, 3000))
-    SmallZomb22 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy22)
+    SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
+    tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
+})
+sprites.onOverlap(SpriteKind.MidEnemy2, SpriteKind.Blast, function (sprite, otherSprite) {
+    MidZomb2.destroy()
+    bullet.destroy()
+    info.changeScoreBy(2)
+    music.smallCrash.play()
+    scene.cameraShake(4, 500)
+    pause(2000)
+    SmallZomb2 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy2)
+    tiles.placeOnRandomTile(SmallZomb2, assets.tile`zomb spawn2`)
+    pause(randint(100, 3000))
+    SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
     tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
 })
 controller.B.onEvent(ControllerButtonEvent.Released, function () {
     Gun2.setImage(assets.image`Gun Right`)
     info.player4.changeScoreBy(-1)
-})
-info.player1.onScore(100, function () {
-    tiles.setCurrentTilemap(tilemap`Boss`)
-    console.log("Enter Command Into Chat")
-    console.log(">Spawn 'Zombie Nazi Kanye West'")
-    game.setDialogTextColor(2)
-    game.showLongText("[SPAWNING KANYE.]", DialogLayout.Top)
-    info.player2.setScore(2500)
-    console.log("Spawning Kanye")
-    Kanyeboss = sprites.create(assets.image`KanyeSmall`, SpriteKind.Kanye)
-    Kanyeboss.setPosition(77, 0)
-    pause(5000)
-    pause(5000)
-    Kanyeboss.setImage(assets.image`KanyeMedium`)
-    Kanyeboss.setPosition(82, 0)
-    pause(5000)
-    pause(5000)
-    pause(5000)
-    Kanyeboss.setImage(assets.image`Kanye`)
-    Kanyeboss.setPosition(87, 0)
-    Kanyeboss.setVelocity(0, 1)
 })
 sprites.onOverlap(SpriteKind.MidEnemy2, SpriteKind.Projectile, function (sprite, otherSprite) {
     MidZomb2.destroy()
@@ -490,10 +646,10 @@ sprites.onOverlap(SpriteKind.MidEnemy2, SpriteKind.Projectile, function (sprite,
     info.changeScoreBy(2)
     music.thump.play()
     pause(2000)
-    SmallZomb2 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy2)
+    SmallZomb2 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy2)
     tiles.placeOnRandomTile(SmallZomb2, assets.tile`zomb spawn2`)
     pause(randint(100, 3000))
-    SmallZomb22 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy22)
+    SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
     tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
 })
 sprites.onOverlap(SpriteKind.Enemy2, SpriteKind.Beam, function (sprite, otherSprite) {
@@ -501,41 +657,94 @@ sprites.onOverlap(SpriteKind.Enemy2, SpriteKind.Beam, function (sprite, otherSpr
     info.changeScoreBy(3)
     music.thump.play()
     pause(2000)
-    SmallZomb2 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy2)
+    SmallZomb2 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy2)
     tiles.placeOnRandomTile(SmallZomb2, assets.tile`zomb spawn2`)
 })
-info.player4.onScore(-6, function () {
+controller.combos.attachCombo("a+l", function () {
+    shotgunthingiguess.setImage(assets.image`ShotgunPow`)
+    Blastthing = sprites.create(assets.image`ShotgunBlast`, SpriteKind.Blast)
+    Blastthing.setPosition(60, 50)
+    timer.after(750, function () {
+        sprites.destroyAllSpritesOfKind(SpriteKind.Blast)
+        timer.after(700, function () {
+            for (let index = 0; index < 1000; index++) {
+                tiles.placeOnTile(shotgunthingiguess, tiles.getTileLocation(20, 0))
+                sprites.destroyAllSpritesOfKind(SpriteKind.Blast)
+                pause(10)
+            }
+            shotgunthingiguess.setImage(assets.image`Shotgun`)
+            shotgunthingiguess.setPosition(15, 54)
+        })
+    })
+})
+info.player4.onScore(0, function () {
     Gun2.setPosition(200, 0)
     reloadspeech2.sayText("Reloading...", 5000, false)
-    pause(randint(1000, 6000))
-    Gun2.setPosition(140, 100)
-    info.player4.setScore(0)
+    timer.after(randint(100, 6000), function () {
+        Gun2.setPosition(140, 100)
+        info.player4.setScore(10)
+    })
 })
+sprites.onOverlap(SpriteKind.Enemy12, SpriteKind.Blast, function (sprite, otherSprite) {
+    SmallZomb12.destroy()
+    bullet.destroy()
+    info.changeScoreBy(1)
+    music.smallCrash.play()
+    scene.cameraShake(4, 500)
+    pause(randint(100, 3000))
+    SmallZomb12 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy12)
+    tiles.placeOnRandomTile(SmallZomb12, assets.tile`zomb spawn`)
+})
+sprites.onOverlap(SpriteKind.Kanye, SpriteKind.Blast, function (sprite, otherSprite) {
+    info.changeScoreBy(10)
+    info.player2.changeScoreBy(100)
+    music.smallCrash.play()
+    scene.cameraShake(4, 500)
+    Kanyeboss.sayText("OW FUCK", 2000, false)
+    timer.after(500, function () {
+        sprites.destroyAllSpritesOfKind(SpriteKind.Blast)
+    })
+})
+controller.combos.attachCombo("ba+r", function () {
+    console.log("Gore Mode Active")
+    tiles.setWallAt(tiles.getTileLocation(6, 9), true)
+    scene.setBackgroundImage(assets.image`Classroom`)
+})
+controller.combos.attachCombo("bardl", function () {
+    sprites.destroyAllSpritesOfKind(SpriteKind.Shotgun)
+    shotgunthingiguess = sprites.create(assets.image`Shotgun`, SpriteKind.Shotgun)
+    shotgunthingiguess.setPosition(15, 54)
+    if (randint(0, 20) == 0) {
+        tiles.setWallAt(tiles.getTileLocation(9, 6), true)
+    }
+})
+let Blastthing: Sprite = null
+let shotgunthingiguess: Sprite = null
+let duck: Sprite = null
+let KABOOOOOOOMMMM: Sprite = null
+let Beam3: Sprite = null
+let beam2: Sprite = null
 let Beam: Sprite = null
-let mySprite: Sprite = null
 let Kanyeboss: Sprite = null
+let BAZOOKA: Sprite = null
 let deathtrigger: Sprite = null
-let LaserGun: Sprite = null
 let MidZomb2: Sprite = null
+let LaserGun: Sprite = null
 let LargeZombo2: Sprite = null
-let bullet: Sprite = null
-let LargeZombo1: Sprite = null
 let zombietrigger: Sprite = null
 let MidZomb1: Sprite = null
-let BAZOOKA: Sprite = null
-let KABOOOOOOOMMMM: Sprite = null
-let HeadYeSprite: Sprite = null
+let bullet: Sprite = null
+let LargeZombo1: Sprite = null
 let SmallZomb22: Sprite = null
 let SmallZomb12: Sprite = null
 let SmallZomb2: Sprite = null
 let SmallZomb1: Sprite = null
-let Cheater: Sprite = null
 let reloadspeech2: Sprite = null
 let reloadspeech: Sprite = null
 let Gun2: Sprite = null
 let Gun1: Sprite = null
 game.showLongText("MR GORE'S ZOMBIE FIGHTER!", DialogLayout.Full)
-game.splash("CONTROLS:", "Press A to shoot the left gun. Press B to shoot the right gun. Press Left to reset zombie spawning if they stop getting closer.")
+game.splash("BEGINER CONTROLS:", "Press A and B to shoot. Press both at the same time to quick reload. Press down and a at the same time to open the controls manual. ")
 scene.setBackgroundImage(assets.image`Woods`)
 tiles.setCurrentTilemap(tilemap`level`)
 Gun1 = sprites.create(assets.image`Gun Left`, SpriteKind.Player)
@@ -546,38 +755,24 @@ reloadspeech.setPosition(40, 93)
 reloadspeech2.setPosition(120, 93)
 Gun1.setPosition(20, 100)
 Gun2.setPosition(140, 100)
-Cheater = sprites.create(img`
-    . . . . . . . . . . b 5 b . . . 
-    . . . . . . . . . b 5 b . . . . 
-    . . . . . . b b b b b b . . . . 
-    . . . . . b b 5 5 5 5 5 b . . . 
-    . . . . b b 5 d 1 f 5 5 d f . . 
-    . . . . b 5 5 1 f f 5 d 4 c . . 
-    . . . . b 5 5 d f b d d 4 4 . . 
-    . b b b d 5 5 5 5 5 4 4 4 4 4 b 
-    b d d d b b d 5 5 4 4 4 4 4 b . 
-    b b d 5 5 5 b 5 5 5 5 5 5 b . . 
-    c d c 5 5 5 5 d 5 5 5 5 5 5 b . 
-    c b d c d 5 5 b 5 5 5 5 5 5 b . 
-    . c d d c c b d 5 5 5 5 5 d b . 
-    . . c b d d d d d 5 5 5 b b . . 
-    . . . c c c c c c c c b b . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Cheatcode)
-tiles.placeOnRandomTile(Cheater, sprites.castle.tileDarkGrass2)
 info.player1.setLife(3)
+pause(2000)
+pause(1000)
+info.player3.setScore(10)
+info.player4.setScore(10)
 pause(randint(100, 3000))
 SmallZomb1 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy)
 tiles.placeOnRandomTile(SmallZomb1, assets.tile`zomb spawn`)
 pause(randint(100, 3000))
-SmallZomb2 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy2)
+SmallZomb2 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy2)
 tiles.placeOnRandomTile(SmallZomb2, assets.tile`zomb spawn2`)
 pause(randint(100, 3000))
 SmallZomb12 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy12)
 tiles.placeOnRandomTile(SmallZomb12, assets.tile`zomb spawn`)
 pause(randint(100, 3000))
-SmallZomb22 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy22)
+SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
 tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
+info.startCountdown(120)
 forever(function () {
     if (tiles.tileAtLocationEquals(tiles.getTileLocation(0, 9), sprites.builtin.forestTiles0)) {
         sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
@@ -593,38 +788,34 @@ forever(function () {
     }
 })
 forever(function () {
-    if (tiles.tileAtLocationEquals(tiles.getTileLocation(4, 3), assets.tile`KanyeDead`)) {
-        pause(5000)
-        pause(5000)
-        pause(5000)
-        pause(5000)
-        scene.cameraShake(4, 500)
-        HeadYeSprite = sprites.create(assets.image`KanyeHead`, SpriteKind.HeadYe)
-        tiles.placeOnRandomTile(HeadYeSprite, assets.tile`KanyeDead`)
-        HeadYeSprite.sayText("RAAAGHH!!! IM BACK!!!")
-        for (let index = 0; index < 696969696969; index++) {
-            pause(6969)
-            pause(6969)
-        }
+    if (tiles.tileAtLocationIsWall(tiles.getTileLocation(9, 6))) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.Bazooka)
+        sprites.destroyAllSpritesOfKind(SpriteKind.LaserGunThing)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Beam)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Blast)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Shotgun)
     }
 })
 forever(function () {
-    if (tiles.tileAtLocationIsWall(tiles.getTileLocation(0, 0))) {
-        info.player3.setScore(100000)
-        info.player4.setScore(100000)
-        game.showLongText("Infinite Ammo Activation : On", DialogLayout.Bottom)
-        console.logValue("InfiAmmo", 1)
-        info.player3.setScore(100000)
-        info.player4.setScore(100000)
-        tiles.placeOnRandomTile(Cheater, assets.tile`myTile`)
-        tiles.setWallAt(tiles.getTileLocation(0, 0), false)
-        for (let index = 0; index < 4; index++) {
-            info.player3.setScore(100000)
-            info.player4.setScore(100000)
-            pause(2000)
-        }
-        pause(5000)
-        pause(5000)
-        console.logValue("InfiAmmo", 0)
+    if (tiles.tileAtLocationIsWall(tiles.getTileLocation(6, 9))) {
+        Gun2.setImage(assets.image`Stapler2`)
+        Gun1.setImage(assets.image`Stapler1`)
+        bullet.setImage(assets.image`Staple`)
+    }
+})
+forever(function () {
+    if (tiles.tileAtLocationEquals(tiles.getTileLocation(3, 3), assets.tile`Logo`)) {
+        tiles.placeOnRandomTile(SmallZomb1, assets.tile`Logo`)
+        tiles.placeOnRandomTile(SmallZomb12, assets.tile`Logo`)
+        tiles.placeOnRandomTile(SmallZomb2, assets.tile`Logo0`)
+        tiles.placeOnRandomTile(SmallZomb22, assets.tile`Logo0`)
+        tiles.placeOnRandomTile(MidZomb2, assets.tile`Logo0`)
+        tiles.placeOnRandomTile(LargeZombo2, assets.tile`Logo0`)
+        tiles.placeOnRandomTile(LargeZombo1, assets.tile`Logo`)
+        tiles.placeOnRandomTile(MidZomb1, assets.tile`Logo`)
+        tiles.placeOnRandomTile(zombietrigger, assets.tile`Logo`)
+        tiles.placeOnRandomTile(zombietrigger, assets.tile`Logo0`)
+        tiles.placeOnRandomTile(deathtrigger, assets.tile`Logo0`)
+        tiles.placeOnRandomTile(deathtrigger, assets.tile`Logo`)
     }
 })
