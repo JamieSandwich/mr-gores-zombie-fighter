@@ -1,0 +1,24 @@
+{
+    "name": "mr-gores-zombie-fighter-tree-88f602d5d4a29bd835860b4ddd4df0c557acab6e",
+    "dependencies": {
+        "device": "*",
+        "mr-gores-zombie-fighter": "github:jamiesandwich/mr-gores-zombie-fighter"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md",
+        "assets.json"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "target": "1.11.37",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "blocksprj"
+}
