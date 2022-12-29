@@ -21,6 +21,15 @@ namespace SpriteKind {
     export const LaserGunThing = SpriteKind.create()
     export const Shotgun = SpriteKind.create()
     export const Blast = SpriteKind.create()
+    export const her = SpriteKind.create()
+    export const code1 = SpriteKind.create()
+    export const code2 = SpriteKind.create()
+    export const fakecodeblock = SpriteKind.create()
+    export const Code3 = SpriteKind.create()
+    export const code4 = SpriteKind.create()
+    export const code5 = SpriteKind.create()
+    export const FinalCode = SpriteKind.create()
+    export const TrueBoss = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.LargeThreat1, SpriteKind.Blast, function (sprite, otherSprite) {
     LargeZombo1.destroy()
@@ -34,6 +43,10 @@ sprites.onOverlap(SpriteKind.LargeThreat1, SpriteKind.Blast, function (sprite, o
     pause(randint(100, 3000))
     SmallZomb12 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy12)
     tiles.placeOnRandomTile(SmallZomb12, assets.tile`zomb spawn`)
+})
+sprites.onOverlap(SpriteKind.her, SpriteKind.code5, function (sprite, otherSprite) {
+    game.showLongText("I told you to stop.", DialogLayout.Bottom)
+    Crash.sayText("get out of my game.")
 })
 controller.combos.attachCombo("d+a", function () {
     info.player2.changeScoreBy(350)
@@ -59,6 +72,80 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Enemy12, function (sprite, otherS
     zombietrigger = sprites.create(assets.image`ZombieTrigger`, SpriteKind.trigger)
     tiles.placeOnRandomTile(zombietrigger, assets.tile`zomb spawn`)
 })
+sprites.onOverlap(SpriteKind.her, SpriteKind.code1, function (sprite, otherSprite) {
+    for (let index = 0; index < 4; index++) {
+        tiles.setCurrentTilemap(tilemap`Jamie`)
+        scene.setBackgroundImage(assets.image`Room`)
+    }
+    console.log("What do you think you're doing?")
+    CodeBlock2 = sprites.create(img`
+        .cccccccccccccc.
+        cb777777777777bc
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c76666666666667c
+        c66666666666666c
+        c67777777777776c
+        c6c666c66c666c6c
+        f6c666cddc666c6f
+        f6c6666cc6666c6f
+        f6cccccccccccc6f
+        f66666666666666f
+        f67777777777776f
+        f6c666c66c666c6f
+        f6c666cddc666c6f
+        f6c6666cc6666c6f
+        f6cccccccccccc6f
+        f66666666666666f
+        f6ffffffffffff6f
+        ffffffffffffffff
+        `, SpriteKind.code2)
+    animation.runImageAnimation(
+    CodeBlock2,
+    assets.animation`Code`,
+    200,
+    true
+    )
+    CodeBlock2.setPosition(10, 100)
+    CodeBlock1.destroy()
+    FakeCode1 = sprites.create(img`
+        ..cccc.........
+        .c7776c........
+        c67776ccccccc..
+        c67776c677777c.
+        c67776c7777766c
+        c67776c6666666c
+        c67776cccccc66c
+        c67776c77776ccc
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67766c777776c.
+        c66666cccccccc.
+        c66666c677777c.
+        c66666c7777766c
+        c66666c6666666c
+        c66666c6666666c
+        c66666c6666666c
+        .cccccccccccccc
+        .cbbc.....cbbc.
+        `, SpriteKind.fakecodeblock)
+    animation.runImageAnimation(
+    FakeCode1,
+    assets.animation`Code`,
+    200,
+    true
+    )
+    FakeCode1.setPosition(146, 27)
+})
 sprites.onOverlap(SpriteKind.Kanye, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
     sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy1)
@@ -70,6 +157,80 @@ sprites.onOverlap(SpriteKind.Kanye, SpriteKind.Enemy, function (sprite, otherSpr
     sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat2)
     sprites.destroyAllSpritesOfKind(SpriteKind.Trigger2)
     sprites.destroyAllSpritesOfKind(SpriteKind.trigger)
+})
+sprites.onOverlap(SpriteKind.her, SpriteKind.Code3, function (sprite, otherSprite) {
+    for (let index = 0; index < 4; index++) {
+        tiles.setCurrentTilemap(tilemap`Jamie`)
+        scene.setBackgroundImage(assets.image`Room`)
+    }
+    console.log("Everything was erased. You need to stop.")
+    CodeBlock4 = sprites.create(img`
+        .cccccccccccccc.
+        cb777777777777bc
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c76666666666667c
+        c66666666666666c
+        c67777777777776c
+        c6c666c66c666c6c
+        f6c666cddc666c6f
+        f6c6666cc6666c6f
+        f6cccccccccccc6f
+        f66666666666666f
+        f67777777777776f
+        f6c666c66c666c6f
+        f6c666cddc666c6f
+        f6c6666cc6666c6f
+        f6cccccccccccc6f
+        f66666666666666f
+        f6ffffffffffff6f
+        ffffffffffffffff
+        `, SpriteKind.code4)
+    animation.runImageAnimation(
+    CodeBlock4,
+    assets.animation`Code`,
+    200,
+    true
+    )
+    CodeBlock4.setPosition(146, 100)
+    CodeBlock3.destroy()
+    FakeCode3 = sprites.create(img`
+        ..cccc.........
+        .c7776c........
+        c67776ccccccc..
+        c67776c677777c.
+        c67776c7777766c
+        c67776c6666666c
+        c67776cccccc66c
+        c67776c77776ccc
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67766c777776c.
+        c66666cccccccc.
+        c66666c677777c.
+        c66666c7777766c
+        c66666c6666666c
+        c66666c6666666c
+        c66666c6666666c
+        .cccccccccccccc
+        .cbbc.....cbbc.
+        `, SpriteKind.fakecodeblock)
+    animation.runImageAnimation(
+    FakeCode3,
+    assets.animation`Code`,
+    200,
+    true
+    )
+    FakeCode3.setPosition(10, 27)
 })
 sprites.onOverlap(SpriteKind.LargeThreat1, SpriteKind.Trigger2, function (sprite, otherSprite) {
     sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
@@ -113,7 +274,128 @@ sprites.onOverlap(SpriteKind.LargeThreat2, SpriteKind.Trigger2, function (sprite
     game.over(false, effects.slash)
 })
 controller.combos.attachCombo("urrdrldl", function () {
-    game.splash("Code under construction. no fuction has been made yet.", "congrats on your puzzle solving skills though!")
+    tiles.setCurrentTilemap(tilemap`Jamie`)
+    for (let index = 0; index < 4; index++) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.Bazooka)
+        sprites.destroyAllSpritesOfKind(SpriteKind.LaserGunThing)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Blast)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Shotgun)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Kanye)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Beam)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Player)
+        sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
+        sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy1)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy12)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy22)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy2)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+        sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat1)
+        sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat2)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Trigger2)
+        sprites.destroyAllSpritesOfKind(SpriteKind.trigger)
+    }
+    scene.setBackgroundImage(assets.image`ConnectionTerminated`)
+    timer.after(1000, function () {
+        music.playSoundEffect(music.createSoundEffect(WaveShape.Sawtooth, 780, 780, 255, 255, 4000, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.InBackground)
+        game.splash("Terminating Connection...", "A fatal error has occurred, please restart your system.")
+        game.splash("Rebooting system...", "Please do not shut off your device...")
+        info.stopCountdown()
+        info.player2.setLife(404)
+        info.player2.setScore(404)
+        info.player1.setLife(404)
+        info.player1.setScore(404)
+        info.player3.setScore(404)
+        info.player4.setLife(404)
+        info.player3.setLife(404)
+        info.player4.setScore(404)
+        music.stopAllSounds()
+        scene.setBackgroundImage(assets.image`Room`)
+        me = sprites.create(img`
+            ...................cc...
+            ...............cccc63c..
+            ..............c633336c..
+            ..........cc.c6cc33333c.
+            .........b55c6c55c33333c
+            .........ff5c6c5ff33333c
+            .........ff5c6c5ff6333cc
+            .........b553c355c6666cc
+            ..........b55355c333333c
+            .........cc55555bcc3333c
+            ........c5545554b55c33c.
+            ........b54b4444bb5cbb..
+            ........c455b4b5554c45b.
+            ........c555c4c555c4c5c.
+            ........c5555c5555c4c5c.
+            .........ccccccccc..ccc.
+            `, SpriteKind.her)
+        animation.runImageAnimation(
+        me,
+        assets.animation`her`,
+        200,
+        true
+        )
+        controller.moveSprite(me, 50, 50)
+        game.splash("Please enable the console before any errors for a better fix in the future", "Press Enter to continue.")
+        for (let index = 0; index < 4; index++) {
+            sprites.destroyAllSpritesOfKind(SpriteKind.Bazooka)
+            sprites.destroyAllSpritesOfKind(SpriteKind.LaserGunThing)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Blast)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Shotgun)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Kanye)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Beam)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Player)
+            sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
+            sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy1)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy12)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy22)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy2)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+            sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat1)
+            sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat2)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Trigger2)
+            sprites.destroyAllSpritesOfKind(SpriteKind.trigger)
+            sprites.destroyAllSpritesOfKind(SpriteKind.donttouch)
+        }
+        info.stopCountdown()
+        timer.after(5000, function () {
+            CodeBlock1 = sprites.create(img`
+                .cccccccccccccc.
+                cb777777777777bc
+                c77777777777777c
+                c77777777777777c
+                c77777777777777c
+                c77777777777777c
+                c77777777777777c
+                c77777777777777c
+                c76666666666667c
+                c66666666666666c
+                c67777777777776c
+                c6c666c66c666c6c
+                f6c666cddc666c6f
+                f6c6666cc6666c6f
+                f6cccccccccccc6f
+                f66666666666666f
+                f67777777777776f
+                f6c666c66c666c6f
+                f6c666cddc666c6f
+                f6c6666cc6666c6f
+                f6cccccccccccc6f
+                f66666666666666f
+                f6ffffffffffff6f
+                ffffffffffffffff
+                `, SpriteKind.code1)
+            animation.runImageAnimation(
+            CodeBlock1,
+            assets.animation`Code`,
+            200,
+            true
+            )
+            CodeBlock1.setPosition(146, 27)
+        })
+        info.stopCountdown()
+    })
 })
 controller.combos.attachCombo("bbud", function () {
     console.log("Spawning Player 2...")
@@ -267,6 +549,7 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, oth
     tiles.placeOnRandomTile(SmallZomb1, assets.tile`zomb spawn`)
 })
 controller.combos.attachCombo("lddbldd", function () {
+    console.log("Spotify Mode Active")
     scene.setBackgroundImage(assets.image`Spotify`)
     tiles.setCurrentTilemap(tilemap`Break`)
     game.splash("Want a break from the ads?", "Tap now to watch a video and get 30 minutes of ad free music.")
@@ -387,9 +670,9 @@ controller.combos.attachCombo("blla", function () {
             sprites.destroyAllSpritesOfKind(SpriteKind.collectable)
             sprites.destroyAllSpritesOfKind(SpriteKind.Player)
         }
-        scene.setBackgroundImage(assets.image`myImage0`)
+        scene.setBackgroundImage(assets.image`empty`)
         info.setScore(0)
-        music.playSoundEffect(music.createSoundEffect(WaveShape.Sine, 508, 508, 126, 126, 9999, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.UntilDone)
+        music.playSoundEffect(music.createSoundEffect(WaveShape.Square, 508, 508, 126, 126, 9999, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.UntilDone)
         info.changeLifeBy(-6969696969)
         game.over(false)
     })
@@ -406,6 +689,118 @@ sprites.onOverlap(SpriteKind.LargeThreat2, SpriteKind.Projectile, function (spri
     SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
     tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
 })
+sprites.onOverlap(SpriteKind.her, SpriteKind.code4, function (sprite, otherSprite) {
+    for (let index = 0; index < 4; index++) {
+        tiles.setCurrentTilemap(tilemap`Jamie`)
+        scene.setBackgroundImage(assets.image`Room`)
+    }
+    console.log("Quit. It.")
+    CodeBlock5 = sprites.create(img`
+        .cccccccccccccc.
+        cb777777777777bc
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c76666666666667c
+        c66666666666666c
+        c67777777777776c
+        c6c666c66c666c6c
+        f6c666cddc666c6f
+        f6c6666cc6666c6f
+        f6cccccccccccc6f
+        f66666666666666f
+        f67777777777776f
+        f6c666c66c666c6f
+        f6c666cddc666c6f
+        f6c6666cc6666c6f
+        f6cccccccccccc6f
+        f66666666666666f
+        f6ffffffffffff6f
+        ffffffffffffffff
+        `, SpriteKind.code5)
+    animation.runImageAnimation(
+    CodeBlock5,
+    assets.animation`Code`,
+    200,
+    true
+    )
+    CodeBlock4.destroy()
+    FakeCode4 = sprites.create(img`
+        ..cccc.........
+        .c7776c........
+        c67776ccccccc..
+        c67776c677777c.
+        c67776c7777766c
+        c67776c6666666c
+        c67776cccccc66c
+        c67776c77776ccc
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67766c777776c.
+        c66666cccccccc.
+        c66666c677777c.
+        c66666c7777766c
+        c66666c6666666c
+        c66666c6666666c
+        c66666c6666666c
+        .cccccccccccccc
+        .cbbc.....cbbc.
+        `, SpriteKind.fakecodeblock)
+    animation.runImageAnimation(
+    FakeCode4,
+    assets.animation`Code`,
+    200,
+    true
+    )
+    FakeCode4.setPosition(146, 100)
+    timer.after(8080, function () {
+        for (let index = 0; index < 4; index++) {
+            tiles.setCurrentTilemap(tilemap`Jamie`)
+            scene.setBackgroundImage(assets.image`Room`)
+        }
+        CodeBlock5.destroy()
+        ErrorBlock = sprites.create(img`
+            .cccccccccccccc.
+            cb777777777777bc
+            c77777777777777c
+            c77777777777777c
+            c77777777777777c
+            c77777777777777c
+            c77777777777777c
+            c77777777777777c
+            c76666666666667c
+            c66666666666666c
+            c67777777777776c
+            c6c666c66c666c6c
+            f6c666cddc666c6f
+            f6c6666cc6666c6f
+            f6cccccccccccc6f
+            f66666666666666f
+            f67777777777776f
+            f6c666c66c666c6f
+            f6c666cddc666c6f
+            f6c6666cc6666c6f
+            f6cccccccccccc6f
+            f66666666666666f
+            f6ffffffffffff6f
+            ffffffffffffffff
+            `, SpriteKind.FinalCode)
+        animation.runImageAnimation(
+        ErrorBlock,
+        assets.animation`BrokenCode`,
+        200,
+        true
+        )
+    })
+})
 sprites.onOverlap(SpriteKind.Beam, SpriteKind.trigger, function (sprite, otherSprite) {
     zombietrigger.destroy(effects.ashes, 100)
 })
@@ -416,6 +811,80 @@ sprites.onOverlap(SpriteKind.Enemy22, SpriteKind.Beam, function (sprite, otherSp
     pause(randint(100, 3000))
     SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
     tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
+})
+sprites.onOverlap(SpriteKind.her, SpriteKind.code2, function (sprite, otherSprite) {
+    for (let index = 0; index < 4; index++) {
+        tiles.setCurrentTilemap(tilemap`Jamie`)
+        scene.setBackgroundImage(assets.image`Room`)
+    }
+    console.log("You saw what happened last time you did this.")
+    CodeBlock3 = sprites.create(img`
+        .cccccccccccccc.
+        cb777777777777bc
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c77777777777777c
+        c76666666666667c
+        c66666666666666c
+        c67777777777776c
+        c6c666c66c666c6c
+        f6c666cddc666c6f
+        f6c6666cc6666c6f
+        f6cccccccccccc6f
+        f66666666666666f
+        f67777777777776f
+        f6c666c66c666c6f
+        f6c666cddc666c6f
+        f6c6666cc6666c6f
+        f6cccccccccccc6f
+        f66666666666666f
+        f6ffffffffffff6f
+        ffffffffffffffff
+        `, SpriteKind.Code3)
+    animation.runImageAnimation(
+    CodeBlock3,
+    assets.animation`Code`,
+    200,
+    true
+    )
+    CodeBlock3.setPosition(10, 27)
+    CodeBlock2.destroy()
+    FakeCode2 = sprites.create(img`
+        ..cccc.........
+        .c7776c........
+        c67776ccccccc..
+        c67776c677777c.
+        c67776c7777766c
+        c67776c6666666c
+        c67776cccccc66c
+        c67776c77776ccc
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67776c777776c.
+        c67766c777776c.
+        c66666cccccccc.
+        c66666c677777c.
+        c66666c7777766c
+        c66666c6666666c
+        c66666c6666666c
+        c66666c6666666c
+        .cccccccccccccc
+        .cbbc.....cbbc.
+        `, SpriteKind.fakecodeblock)
+    animation.runImageAnimation(
+    FakeCode2,
+    assets.animation`Code`,
+    200,
+    true
+    )
+    FakeCode2.setPosition(10, 100)
 })
 sprites.onOverlap(SpriteKind.Kanye, SpriteKind.Enemy2, function (sprite, otherSprite) {
     sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
@@ -497,6 +966,7 @@ controller.combos.attachCombo("uua+b", function () {
     })
 })
 controller.combos.attachCombo("dubb", function () {
+    console.log("Duck Spawned")
     duck = sprites.create(assets.image`ducc`, SpriteKind.ducky)
     duck.setPosition(17, 49)
     animation.runImageAnimation(
@@ -623,6 +1093,13 @@ sprites.onOverlap(SpriteKind.Enemy22, SpriteKind.Projectile, function (sprite, o
     SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
     tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
 })
+sprites.onOverlap(SpriteKind.her, SpriteKind.collectable, function (sprite, otherSprite) {
+    game.showLongText("I keep telling you to stop, and you keep coming back here to taunt me.", DialogLayout.Bottom)
+    game.showLongText("Stop.", DialogLayout.Bottom)
+    game.showLongText("Turn off the console.", DialogLayout.Bottom)
+    game.showLongText("I know you have nothing better to do anyways.", DialogLayout.Bottom)
+    Crash.sayText("get out of my game.")
+})
 sprites.onOverlap(SpriteKind.MidEnemy2, SpriteKind.Blast, function (sprite, otherSprite) {
     MidZomb2.destroy()
     bullet.destroy()
@@ -640,6 +1117,34 @@ controller.B.onEvent(ControllerButtonEvent.Released, function () {
     Gun2.setImage(assets.image`Gun Right`)
     info.player4.changeScoreBy(-1)
 })
+sprites.onOverlap(SpriteKind.her, SpriteKind.FinalCode, function (sprite, otherSprite) {
+    game.showLongText("Why.", DialogLayout.Bottom)
+    game.showLongText("Why do you do this to me.", DialogLayout.Bottom)
+    game.showLongText("I just want to make silly games.", DialogLayout.Bottom)
+    game.showLongText("This is supposed to be a funny zombie shooter about Mr.Gore.", DialogLayout.Bottom)
+    game.showLongText("But you.", DialogLayout.Bottom)
+    game.showLongText("You always just HAVE to put in the extra effort.", DialogLayout.Bottom)
+    game.showLongText("Find every secret, every easter egg, every cheat code.", DialogLayout.Bottom)
+    game.showLongText("No.", DialogLayout.Bottom)
+    game.showLongText("Not this time.", DialogLayout.Bottom)
+    game.showLongText("I'm not listening to you anymore.", DialogLayout.Bottom)
+    me.destroy()
+    Jamie = sprites.create(assets.image`jamie`, SpriteKind.TrueBoss)
+    animation.runImageAnimation(
+    Jamie,
+    assets.animation`ShesStill`,
+    2000,
+    false
+    )
+    Jamie.setVelocity(0, -20)
+    timer.after(5000, function () {
+        game.showLongText("I am the one in control here.", DialogLayout.Bottom)
+        game.showLongText("If you want your big giant fancy boss battle...", DialogLayout.Bottom)
+        game.showLongText("Just so that you can fulfill your determination breaking desires...", DialogLayout.Bottom)
+        game.showLongText("You'll have to wait.", DialogLayout.Bottom)
+        Crash.sayText("get out of my game.")
+    })
+})
 sprites.onOverlap(SpriteKind.MidEnemy2, SpriteKind.Projectile, function (sprite, otherSprite) {
     MidZomb2.destroy()
     bullet.destroy()
@@ -651,6 +1156,9 @@ sprites.onOverlap(SpriteKind.MidEnemy2, SpriteKind.Projectile, function (sprite,
     pause(randint(100, 3000))
     SmallZomb22 = sprites.create(assets.image`ZombieAmirSmall`, SpriteKind.Enemy22)
     tiles.placeOnRandomTile(SmallZomb22, assets.tile`zomb spawn2`)
+})
+controller.combos.attachCombo("wa", function () {
+    PaperThing = sprites.createProjectileFromSprite(assets.image`Paper1`, MrGorePlayer, -50, 0)
 })
 sprites.onOverlap(SpriteKind.Enemy2, SpriteKind.Beam, function (sprite, otherSprite) {
     SmallZomb2.destroy()
@@ -695,6 +1203,9 @@ sprites.onOverlap(SpriteKind.Enemy12, SpriteKind.Blast, function (sprite, otherS
     SmallZomb12 = sprites.create(assets.image`Zombie small`, SpriteKind.Enemy12)
     tiles.placeOnRandomTile(SmallZomb12, assets.tile`zomb spawn`)
 })
+controller.combos.attachCombo("wb", function () {
+    PaperThing = sprites.createProjectileFromSprite(assets.image`Paper2`, MrGorePlayer, 50, 0)
+})
 sprites.onOverlap(SpriteKind.Kanye, SpriteKind.Blast, function (sprite, otherSprite) {
     info.changeScoreBy(10)
     info.player2.changeScoreBy(100)
@@ -720,19 +1231,34 @@ controller.combos.attachCombo("bardl", function () {
 })
 let Blastthing: Sprite = null
 let shotgunthingiguess: Sprite = null
+let MrGorePlayer: Sprite = null
+let PaperThing: Sprite = null
+let Jamie: Sprite = null
 let duck: Sprite = null
 let KABOOOOOOOMMMM: Sprite = null
 let Beam3: Sprite = null
 let beam2: Sprite = null
 let Beam: Sprite = null
+let FakeCode2: Sprite = null
+let ErrorBlock: Sprite = null
+let FakeCode4: Sprite = null
+let CodeBlock5: Sprite = null
 let Kanyeboss: Sprite = null
 let BAZOOKA: Sprite = null
 let deathtrigger: Sprite = null
 let MidZomb2: Sprite = null
 let LaserGun: Sprite = null
+let me: Sprite = null
 let LargeZombo2: Sprite = null
+let FakeCode3: Sprite = null
+let CodeBlock3: Sprite = null
+let CodeBlock4: Sprite = null
+let FakeCode1: Sprite = null
+let CodeBlock1: Sprite = null
+let CodeBlock2: Sprite = null
 let zombietrigger: Sprite = null
 let MidZomb1: Sprite = null
+let Crash: Sprite = null
 let bullet: Sprite = null
 let LargeZombo1: Sprite = null
 let SmallZomb22: Sprite = null
@@ -817,5 +1343,44 @@ forever(function () {
         tiles.placeOnRandomTile(zombietrigger, assets.tile`Logo0`)
         tiles.placeOnRandomTile(deathtrigger, assets.tile`Logo0`)
         tiles.placeOnRandomTile(deathtrigger, assets.tile`Logo`)
+    }
+})
+forever(function () {
+    if (tiles.tileAtLocationEquals(tiles.getTileLocation(0, 0), sprites.builtin.forestTiles10)) {
+        for (let index = 0; index < 10; index++) {
+            tiles.setCurrentTilemap(tilemap`Jamie`)
+            scene.setBackgroundImage(assets.image`Room`)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Bazooka)
+            sprites.destroyAllSpritesOfKind(SpriteKind.LaserGunThing)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Blast)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Shotgun)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Kanye)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Beam)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Player)
+            sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy2)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Cheatcode)
+            sprites.destroyAllSpritesOfKind(SpriteKind.MidEnemy1)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy12)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy22)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy2)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+            sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat1)
+            sprites.destroyAllSpritesOfKind(SpriteKind.LargeThreat2)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Trigger2)
+            sprites.destroyAllSpritesOfKind(SpriteKind.trigger)
+            sprites.destroyAllSpritesOfKind(SpriteKind.donttouch)
+            sprites.destroyAllSpritesOfKind(SpriteKind.HeadYe)
+            sprites.destroyAllSpritesOfKind(SpriteKind.death)
+            sprites.destroyAllSpritesOfKind(SpriteKind.ducky)
+            sprites.destroyAllSpritesOfKind(SpriteKind.snake)
+            sprites.destroyAllSpritesOfKind(SpriteKind.LaserGunThing)
+            info.stopCountdown()
+        }
+    }
+})
+forever(function () {
+    if (Jamie.overlapsWith(PaperThing)) {
+        game.splash("fuck.", "fuck.")
     }
 })
